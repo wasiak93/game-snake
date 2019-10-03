@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.board {
+  position: relative;
+  background-color: rgba(200, 200, 200, 1);
+  position: absolute;
+  top: 20px;
+  left: 40px;
+}
+
+.cell {
+  border: solid black 1px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.food {
+  background-color: red;
+  border-radius: 50%;
+
+}
+
+.snake {
+  background-color: black;
+}
