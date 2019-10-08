@@ -12,17 +12,19 @@ const foodPosition = {
   y: 5,
 }
 const snakePosition = {
-  x: [4, 4],
-  y: [2, 3],
+  x: [14, 14],
+  y: [14, 13],
   xy: [],
 }
-const snakeV = {
-  x: 1,
-  y: 1,
-}
+
 
 board.style.width = cellWidth * cellNumberColumns + 'px';
 board.style.height = cellHeight * cellNumberRows + 'px';
+
+let moveRightIndex = '';
+let moveLeftIndex = '';
+let moveUpIndex = '';
+let moveDownIndex = '';
 
 const drawBoard = () => {
   for (let x = 0; x < cellNumberColumns; x++) {
@@ -77,22 +79,48 @@ const moveSnake = () => {
 
 }
 const moveRight = () => {
-  // zmieniam pozycje x
+  // zmienia pozycje x
   let lastItemX = snakePosition.x[snakePosition.x.length - 1];
   lastItemX++;
   snakePosition.x.push(lastItemX);
   snakePosition.x.shift(0, 1)
-  // zmieniam pozycje y
+  // zmienia pozycje y
   let lastItemY = snakePosition.y[snakePosition.y.length - 1];
   snakePosition.y.push(lastItemY)
   snakePosition.y.shift(0, 1)
   // rysuje weza
   snake()
+  // clearTimeout(moveUpIndex);
+  // clearTimeout(moveDownIndex);
+
 }
 
+const moveLeft = () => {
+  // clearTimeout(moveUpIndex);
+  // clearTimeout(moveDownIndex);
+  // zmienia pozycje x
+  let firstItemX = snakePosition.x[0];
+  firstItemX--;
+  snakePosition.x.unshift(firstItemX);
+  snakePosition.x.pop(-1)
+
+  // zmienia pozycje y
+  let firstItemY = snakePosition.y[0];
+  snakePosition.y.unshift(firstItemY);
+  snakePosition.y.pop(-1)
+  console.log(snakePosition.x)
+  // rysuje weza
+  snake()
+}
+
+
+
 const move = (e) => {
+
   if (e.keyCode === 37) {
-    if (lastKeyCode === 37) return;
+    if (lastKeyCode === 39 || lastKeyCode === 37) return;
+    moveLeft()
+    moveLeftIndex = setInterval(moveLeft, 500);
     lastKeyCode = e.keyCode;
   } else if (e.keyCode === 38) {
     snakePosition.y--;
@@ -100,6 +128,7 @@ const move = (e) => {
   } else if (e.keyCode === 39) {
     if (lastKeyCode === 39 || lastKeyCode === 37) return;
     moveRight()
+    moveRightIndex = setInterval(moveRight, 500);
     lastKeyCode = e.keyCode;
   } else if (e.keyCode === 40) {
     snakePosition.y++;
@@ -109,13 +138,14 @@ const move = (e) => {
 
 
 
+
 const draw = () => {
   drawBoard()
   drawPositionFood()
   food()
   snake()
-  setInterval(moveRight, 100)
 }
+
 
 draw()
 window.addEventListener('keydown', move)
