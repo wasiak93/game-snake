@@ -12,7 +12,7 @@ const foodPosition = {
   y: 5,
 }
 const snakePosition = {
-  x: [3, 4, 5],
+  x: [0, 1, 2],
   y: [3, 3, 3],
 }
 
@@ -57,32 +57,36 @@ const food = () => {
   })
 }
 
+
+
+const eatFood = () => {
+  if (snakePosition.x.some((x, i) => {
+      return x === foodPosition.x && snakePosition.y.some((y, i_y) => {
+        return y === foodPosition.y && i === i_y
+      })
+    })) {
+    // TUTAJ TREBA WSTAWIC ZJADANIE
+  }
+}
+
 const snake = () => {
 
   cellsArr.forEach(cell => {
     cell.classList.remove('snake');
-    // console.log(document.getElementsByClassName('snake'))
-
     const cellDataArr = cell.dataset.key.split('-');
-    if (snakePosition.x.find(x => {
-        return x.toString() === cellDataArr[0]
-      }) &&
-      snakePosition.y.find(y => {
-        return y.toString() === cellDataArr[1]
-      })
-    ) {
-      // console.log(snakePosition)
+    if (snakePosition.x.some((x, i) => {
+        return x.toString() === cellDataArr[0] && snakePosition.y.some((y, i_y) => {
+          return y.toString() === cellDataArr[1] && i === i_y;
+        })
+      })) {
       cell.classList.add('snake')
-      // console.log(cell)
-      // console.log(snakePosition)
     }
 
   })
-}
-
-const moveSnake = () => {
 
 }
+
+
 const moveRight = () => {
   clearTimeout(moveUpIndex);
   clearTimeout(moveDownIndex);
@@ -97,25 +101,27 @@ const moveRight = () => {
   snakePosition.y.shift()
   // rysuje weza
   snake()
-
+  eatFood()
 
 }
 
 const moveLeft = () => {
+
   clearTimeout(moveUpIndex);
   clearTimeout(moveDownIndex);
   // zmienia pozycje x
-  let firstItemX = snakePosition.x[0];
-  firstItemX--;
-  snakePosition.x.unshift(firstItemX);
-  snakePosition.x.pop()
+  let lastItemX = snakePosition.x[snakePosition.x.length - 1];
+  lastItemX--;
+  snakePosition.x.push(lastItemX);
+  snakePosition.x.shift()
 
   // zmienia pozycje y
-  let firstItemY = snakePosition.y[0];
-  snakePosition.y.unshift(firstItemY);
-  snakePosition.y.pop()
+  let lastItemY = snakePosition.y[snakePosition.y.length - 1];
+  snakePosition.y.push(lastItemY);
+  snakePosition.y.shift()
   // rysuje weza
   snake()
+  eatFood()
 }
 
 const moveDown = () => {
@@ -132,6 +138,7 @@ const moveDown = () => {
   snakePosition.y.shift();
   // rysuje weza
   snake()
+  eatFood()
 }
 const moveUp = () => {
   clearTimeout(moveLeftIndex);
@@ -147,34 +154,33 @@ const moveUp = () => {
   snakePosition.y.shift();
   // rysuje weza
   snake()
+  eatFood()
 
 }
 
 
 
 const move = (e) => {
-  cellsArr.forEach(cell => {
 
-  })
   if (e.keyCode === 37) {
     if (lastKeyCode === 39 || lastKeyCode === 37) return;
     moveLeft()
-    // moveLeftIndex = setInterval(moveLeft, 500);
+    moveLeftIndex = setInterval(moveLeft, 500);
     lastKeyCode = e.keyCode;
   } else if (e.keyCode === 38) {
     if (lastKeyCode === 38 || lastKeyCode === 40) return;
     moveUp()
-    // moveUpIndex = setInterval(moveUp, 500);
+    moveUpIndex = setInterval(moveUp, 500);
     lastKeyCode = e.keyCode;
   } else if (e.keyCode === 39) {
     if (lastKeyCode === 39 || lastKeyCode === 37) return;
     moveRight()
-    // moveRightIndex = setInterval(moveRight, 500);
+    moveRightIndex = setInterval(moveRight, 500);
     lastKeyCode = e.keyCode;
   } else if (e.keyCode === 40) {
     if (lastKeyCode === 38 || lastKeyCode === 40) return;
     moveDown()
-    // moveDownIndex = setInterval(moveDown, 500);
+    moveDownIndex = setInterval(moveDown, 500);
     lastKeyCode = e.keyCode;
   }
 }
