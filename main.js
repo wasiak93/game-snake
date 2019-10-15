@@ -4,7 +4,7 @@ const cellWidth = 20;
 const cellNumberColumns = 15;
 const cellNumberRows = 15;
 let lastKeyCode = '';
-const time = 700;
+const time = 300;
 
 const cellsArr = [];
 
@@ -26,6 +26,9 @@ let moveRightIndex = '';
 let moveLeftIndex = '';
 let moveUpIndex = '';
 let moveDownIndex = '';
+
+let lastItemX = "";
+let lastItemY = "";
 
 const drawBoard = () => {
   for (let x = 0; x < cellNumberColumns; x++) {
@@ -96,19 +99,24 @@ const snake = () => {
 }
 
 
+
+
 const moveRight = () => {
   clearTimeout(moveUpIndex);
   clearTimeout(moveDownIndex);
   // zmienia pozycje x
-  let lastItemX = snakePosition.x[snakePosition.x.length - 1];
+  lastItemX = snakePosition.x[snakePosition.x.length - 1];
   lastItemX++;
+  // console.log(lastItemX);
+
   snakePosition.x.push(lastItemX);
   if (!eat) {
     snakePosition.x.shift()
   }
 
   // zmienia pozycje y
-  let lastItemY = snakePosition.y[snakePosition.y.length - 1];
+  lastItemY = snakePosition.y[snakePosition.y.length - 1];
+  // console.log(lastItemY);
   snakePosition.y.push(lastItemY)
   if (!eat) {
     snakePosition.y.shift()
@@ -116,19 +124,22 @@ const moveRight = () => {
     eat = false;
   }
 
+
   // rysuje weza i jedzenie
+  // checkPosition()
   eatFood()
   snake()
 
 
 }
 
+
 const moveLeft = () => {
 
   clearTimeout(moveUpIndex);
   clearTimeout(moveDownIndex);
   // zmienia pozycje x
-  let lastItemX = snakePosition.x[snakePosition.x.length - 1];
+  lastItemX = snakePosition.x[snakePosition.x.length - 1];
   lastItemX--;
   snakePosition.x.push(lastItemX);
   if (!eat) {
@@ -137,7 +148,7 @@ const moveLeft = () => {
 
 
   // zmienia pozycje y
-  let lastItemY = snakePosition.y[snakePosition.y.length - 1];
+  lastItemY = snakePosition.y[snakePosition.y.length - 1];
   snakePosition.y.push(lastItemY);
   if (!eat) {
     snakePosition.y.shift()
@@ -146,6 +157,7 @@ const moveLeft = () => {
   }
 
   // rysuje weza i jedzenie
+  // checkPosition()
   eatFood()
   snake()
 
@@ -154,23 +166,43 @@ const moveLeft = () => {
 const moveDown = () => {
   clearTimeout(moveLeftIndex);
   clearTimeout(moveRightIndex);
-  // ustawia pozycje dla x
-  let lastItemX = snakePosition.x[snakePosition.x.length - 1];
+  // wyciagam pozycje dla x
+  lastItemX = snakePosition.x[snakePosition.x.length - 1];
+  // snakePosition.x.push(lastItemX);
+  // if (!eat) {
+  //   snakePosition.x.shift();
+  // }
+
+  // wyciagam pozycje dla y
+  lastItemY = snakePosition.y[snakePosition.y.length - 1];
+  lastItemY++;
+  // snakePosition.y.push(lastItemY);
+  // if (!eat) {
+  //   snakePosition.y.shift();
+  // } else {
+  //   eat = false;
+  // }
+  checkPosition()
+  // if (snakePosition.x.some((x, i) => {
+  //     return x === lastItemX && snakePosition.y.some((y, i_y) => {
+  //       return y === lastItemY && i === i_y;
+  //     })
+  //   })) {
+  //   console.log('zderzenie')
+  // }
+
+  // ustawiam nowa pozycje dla snake
+
   snakePosition.x.push(lastItemX);
   if (!eat) {
     snakePosition.x.shift();
   }
-
-  // ustawia pozycje dla y
-  let lastItemY = snakePosition.y[snakePosition.y.length - 1];
-  lastItemY++;
   snakePosition.y.push(lastItemY);
   if (!eat) {
     snakePosition.y.shift();
   } else {
     eat = false;
   }
-
   // rysuje weza i jedzenie
   eatFood()
   snake()
@@ -180,14 +212,14 @@ const moveUp = () => {
   clearTimeout(moveLeftIndex);
   clearTimeout(moveRightIndex);
   // ustawia pozycje dla x
-  let lastItemX = snakePosition.x[snakePosition.x.length - 1];
+  lastItemX = snakePosition.x[snakePosition.x.length - 1];
   snakePosition.x.push(lastItemX);
   if (!eat) {
     snakePosition.x.shift()
   }
 
   // ustawia pozycje dla y
-  let lastItemY = snakePosition.y[snakePosition.y.length - 1];
+  lastItemY = snakePosition.y[snakePosition.y.length - 1];
   lastItemY--;
   snakePosition.y.push(lastItemY);
   if (!eat) {
@@ -197,11 +229,24 @@ const moveUp = () => {
   }
 
   // rysuje weza i jedzenie
+  // checkPosition()
   eatFood()
   snake()
 
 
 }
+const checkPosition = () => {
+  // console.log(lastItemX);
+  // console.log(lastItemY);
+  if (snakePosition.x.some((x, i) => {
+      return x === lastItemX && snakePosition.y.some((y, i_y) => {
+        return y === lastItemY && i === i_y;
+      })
+    })) {
+    alert('przegrałeś')
+  }
+}
+
 
 
 
