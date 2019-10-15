@@ -70,9 +70,7 @@ const eatFood = () => {
     cellsArr.forEach(cell => {
       cell.classList.remove('food')
     })
-    console.log('teraz')
-    snakePosition.x.push(foodPosition.x)
-    snakePosition.y.push(foodPosition.y)
+
     eat = true;
     snake()
     drawFoodPosition()
@@ -82,7 +80,6 @@ const eatFood = () => {
 }
 
 const snake = () => {
-
   cellsArr.forEach(cell => {
     cell.classList.remove('snake');
     const cellDataArr = cell.dataset.key.split('-');
