@@ -12,7 +12,7 @@ const foodPosition = {
   x: 5,
   y: 5,
 }
-const snakePosition = {
+let snakePosition = {
   x: [0, 1, 2],
   y: [3, 3, 3],
 }
@@ -102,8 +102,8 @@ const snake = () => {
 
 
 const moveRight = () => {
-  clearTimeout(moveUpIndex);
-  clearTimeout(moveDownIndex);
+  clearInterval(moveUpIndex);
+  clearInterval(moveDownIndex);
   // zmienia pozycje x
   lastItemX = snakePosition.x[snakePosition.x.length - 1];
   lastItemX++;
@@ -122,11 +122,12 @@ const moveRight = () => {
   checkPosition()
 
   // ustawiam nowa pozycje dla snake
+  // x
   snakePosition.x.push(lastItemX);
   if (!eat) {
     snakePosition.x.shift()
   }
-
+  // y
   snakePosition.y.push(lastItemY)
   if (!eat) {
     snakePosition.y.shift()
@@ -163,11 +164,12 @@ const moveLeft = () => {
   checkPosition()
 
   // ustawiam nowa pozycje dla snake
+  // x
   snakePosition.x.push(lastItemX);
   if (!eat) {
     snakePosition.x.shift()
   }
-
+  // y
   snakePosition.y.push(lastItemY);
   if (!eat) {
     snakePosition.y.shift()
@@ -183,39 +185,23 @@ const moveLeft = () => {
 }
 
 const moveDown = () => {
-  clearTimeout(moveLeftIndex);
-  clearTimeout(moveRightIndex);
+  clearInterval(moveLeftIndex);
+  clearInterval(moveRightIndex);
   // wyciagam pozycje dla x
   lastItemX = snakePosition.x[snakePosition.x.length - 1];
-  // snakePosition.x.push(lastItemX);
-  // if (!eat) {
-  //   snakePosition.x.shift();
-  // }
-
   // wyciagam pozycje dla y
   lastItemY = snakePosition.y[snakePosition.y.length - 1];
   lastItemY++;
-  // snakePosition.y.push(lastItemY);
-  // if (!eat) {
-  //   snakePosition.y.shift();
-  // } else {
-  //   eat = false;
-  // }
+
   checkPosition()
-  // if (snakePosition.x.some((x, i) => {
-  //     return x === lastItemX && snakePosition.y.some((y, i_y) => {
-  //       return y === lastItemY && i === i_y;
-  //     })
-  //   })) {
-  //   console.log('zderzenie')
-  // }
 
   // ustawiam nowa pozycje dla snake
-
+  // x
   snakePosition.x.push(lastItemX);
   if (!eat) {
     snakePosition.x.shift();
   }
+  // y
   snakePosition.y.push(lastItemY);
   if (!eat) {
     snakePosition.y.shift();
@@ -228,8 +214,8 @@ const moveDown = () => {
 
 }
 const moveUp = () => {
-  clearTimeout(moveLeftIndex);
-  clearTimeout(moveRightIndex);
+  clearInterval(moveLeftIndex);
+  clearInterval(moveRightIndex);
   // ustawia pozycje dla x
   lastItemX = snakePosition.x[snakePosition.x.length - 1];
   // snakePosition.x.push(lastItemX);
@@ -264,14 +250,20 @@ const moveUp = () => {
 
 }
 const checkPosition = () => {
-  // console.log(lastItemX);
-  // console.log(lastItemY);
   if (snakePosition.x.some((x, i) => {
       return x === lastItemX && snakePosition.y.some((y, i_y) => {
         return y === lastItemY && i === i_y;
       })
     })) {
-    alert('przegrałeś')
+    alert('przegrałeś');
+    // clearTimeout(moveDownIndex)
+    // clearTimeout(moveUpIndex)
+    // clearTimeout(moveLeftIndex)
+    // clearTimeout(moveRigthIndex)
+    // snakePosition = {
+    //   x: [0, 1, 2],
+    //   y: [3, 3, 3],
+    // }
   }
 }
 
