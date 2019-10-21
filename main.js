@@ -232,14 +232,23 @@ const moveUp = () => {
   clearTimeout(moveRightIndex);
   // ustawia pozycje dla x
   lastItemX = snakePosition.x[snakePosition.x.length - 1];
-  snakePosition.x.push(lastItemX);
-  if (!eat) {
-    snakePosition.x.shift()
-  }
+  // snakePosition.x.push(lastItemX);
+  // if (!eat) {
+  //   snakePosition.x.shift()
+  // }
 
   // ustawia pozycje dla y
   lastItemY = snakePosition.y[snakePosition.y.length - 1];
   lastItemY--;
+  checkPosition()
+
+  // ustawiam nowa pozycje dla snake
+  //  x
+  snakePosition.x.push(lastItemX);
+  if (!eat) {
+    snakePosition.x.shift()
+  }
+  // y
   snakePosition.y.push(lastItemY);
   if (!eat) {
     snakePosition.y.shift();
