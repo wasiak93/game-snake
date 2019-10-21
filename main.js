@@ -109,14 +109,24 @@ const moveRight = () => {
   lastItemX++;
   // console.log(lastItemX);
 
+
+  // snakePosition.x.push(lastItemX);
+  // if (!eat) {
+  //   snakePosition.x.shift()
+  // }
+
+  // zmienia pozycje y
+  lastItemY = snakePosition.y[snakePosition.y.length - 1];
+  // console.log(lastItemY);
+
+  checkPosition()
+
+  // ustawiam nowa pozycje dla snake
   snakePosition.x.push(lastItemX);
   if (!eat) {
     snakePosition.x.shift()
   }
 
-  // zmienia pozycje y
-  lastItemY = snakePosition.y[snakePosition.y.length - 1];
-  // console.log(lastItemY);
   snakePosition.y.push(lastItemY)
   if (!eat) {
     snakePosition.y.shift()
