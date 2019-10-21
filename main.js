@@ -151,14 +151,23 @@ const moveLeft = () => {
   // zmienia pozycje x
   lastItemX = snakePosition.x[snakePosition.x.length - 1];
   lastItemX--;
+  // snakePosition.x.push(lastItemX);
+  // if (!eat) {
+  //   snakePosition.x.shift()
+  // }
+
+
+  // zmienia pozycje y
+  lastItemY = snakePosition.y[snakePosition.y.length - 1];
+
+  checkPosition()
+
+  // ustawiam nowa pozycje dla snake
   snakePosition.x.push(lastItemX);
   if (!eat) {
     snakePosition.x.shift()
   }
 
-
-  // zmienia pozycje y
-  lastItemY = snakePosition.y[snakePosition.y.length - 1];
   snakePosition.y.push(lastItemY);
   if (!eat) {
     snakePosition.y.shift()
